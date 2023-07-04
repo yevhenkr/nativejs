@@ -1,3 +1,5 @@
+import {CityType, GovernmentBuildings, HousesType} from './02_02';
+
 export type  TechnologiesType = {
     id: number,
     title: string
@@ -55,4 +57,17 @@ export const madeStudentActive = (student:StudentType) =>{
 
 export const doseStudentLiveIn = (s:StudentType, city: string)=>{
     return s.address.city.countryTitle === city
+}
+
+export const getStreetsTitlesOfGovernmentBuildings= (buildings: Array<GovernmentBuildings>)=>{
+return buildings.map(b=>b.address.street.title)
+}
+
+export const getStreetsTitlesOfHouses= (buildings: Array<HousesType>)=>{
+    return buildings.map(b=>b.address.street.title)
+}
+
+export const createMessages= (houses: Array<HousesType>)=>{
+    return houses.map(h=>`Hellow guys from ${h.address.street.title}`)
+
 }
