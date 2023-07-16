@@ -1,46 +1,159 @@
-//Изменение которое браузер может отследить => собітие
-// Собітие => Браузер візівает функцию обработчик
-// Обработчик, слушатель, подписчик, handler, subscriber будем пока их щитатть синонимами
-// обработчик должнін біть назначен(єто действие мі назіваем подписался на собітие, повесили обработчик на собітие) функция обработчик єто любая функция
-// собітие => {...} => handler({...})
-//{..} => event, e     event, e єто обозначение обьекта
-// по умолчанию eventListner от кнопки к body система всплітия
-// current target(указыввает на элемент в котрый ткули) от currentTarget(укажет єлемент на которм весит обработчик и всплівая на верх может заставить звинеть другие
-// e.currentTarget по умолчанию защита от измения html и случайного перекрітия кнопки перекрітие не помешает
-// собітие всегда всплівает
-// e.stopPropagation() блокировать всплітие собітий
-//все обработчики колбеки не все колбеки обработчики
-// итог через через e.currentTarget.id он указівает на тот єлемент на котором обработчик висит и чтоб оно не всплівало надо дописать e.stopPropagation()
+const todoList_1 = "1"
+const todoList_2 = "2"
 
-const handler = (e) => {
-    e.stopPropagation()
-    if (e.currentTarget.id === "small") {
-        alert("You")
+const todoLists = [
+    {
+        id: todoList_1,
+        name: "What to lern",
+        filter: "all",
+    },
+    {
+        id: "2",
+        name: "What to buy",
+        filter: "all",
     }
+]
+// const tasks = [
+//     {id: "10", todoListId: '1', title: "HTML", isDone: true},
+//     {id: "11", todoListId: '1', title: "CSS", isDone: true},
+//     {id: "12", todoListId: '1', title: "JS/TS", isDone: true},
+//     {id: "13", todoListId: '2', title: "Beer", isDone: true},
+//     {id: "14", todoListId: '2', title: "Meat", isDone: true},
+//     {id: "15", todoListId: '2', title: "Cheeps", isDone: true}
+// ]
+const tasks = {
+    [todoList_1]: [
+        {id: "10", title: "HTML", isDone: true},
+        {id: "11", title: "CSS", isDone: true},
+        {id: "12", title: "JS/TS", isDone: true}
+    ],
+    [todoList_2]: [
+        {id: "13", title: "Beer", isDone: true},
+        {id: "14", title: "Meat", isDone: true},
+        {id: "15", title: "Cheeps", isDone: true}
+    ]
 }
 
-const sm = document.getElementById('small')
-const md = document.getElementById('medium')
-const bg = document.getElementById('big')
+console.log(tasks)
+console.log(todoLists)
 
-sm.onclick = handler
-sm.onclick = (e) => {
+const addTodo = (todoListTitle) => {
+    const newTodoListId = "3"
+    const newTodoList = {
+        id: newTodoListId,
+        title: todoListTitle,
+        filter: "all"
+    }
+    const newTodoListState = [...todoLists, newTodoList]
+    console.log(newTodoListState)
+    const newTaskState = {...tasks, [newTodoListId]: []}
+    console.log(newTaskState)
 }
 
-sm.onclick = undefined
-sm.onclick = null
+addTodo("What to read")
 
-sm.addEventListener("click", handler)
-md.addEventListener("click", () => {
-    alert("Wow!!")
-})
+const removeTodoList = (newTodoListId) => {
+    const newTodoListState = todoLists.filter(tl => tl.id !== todoLists)
+    console.log(newTodoListState)
+    const copyTasksState = {...tasks}
+    delete copyTasksState[newTodoListId]
+    console.log(copyTasksState)
+}
+removeTodoList("2")
 
-bg.addEventListener("click", () => {
-    alert("Boom!!")
-})
+const students = [
+    {
+        id: "1",
+        name: "Bob",
+        age: 22,
+        isMarried: true,
+        scores: 85
+    },
+    {
+        id: "2",
+        name: "Alex",
+        age: 21,
+        isMarried: true,
+        scores: 89
+    },
+    {
+        id: "3",
+        name: "Nick",
+        age: 20,
+        isMarried: false,
+        scores: 120
+    },
+    {
+        id: "4",
+        name: "John",
+        age: 21,
+        isMarried: false,
+        scores: 100
+    },
+    {
+        id: "5",
+        name: "Helge",
+        age: 21,
+        isMarried: false,
+        scores: 100
+    },
+];
 
-const a = document.getElementById('a')
-a.addEventListener("click", (e) => {
-    e.preventDefault()
-    alert("kkkkkkkkk")
-})
+
+//------------------------------------------------------------------------
+//////Target
+// const studensObj = {
+//     "1": {
+//         name: "Bob",
+//         age: 22,
+//         isMarried: true,
+//         scores: 85
+//     },
+//     "2": {
+//         name: "Alex",
+//         age: 21,
+//         isMarried: true,
+//         scores: 89
+//     }
+// }
+
+////////////////////////////////1 приводим students к обекту масив при помощи for
+// const studensObj = {}
+// for (let i = 0; i < students.length; i++) {
+//     studensObj[students[i].id] = students[i]
+//     delete studensObj[students[i].id].id
+// }
+// console.log(studensObj)
+
+/////////////////////////////////////приводим students к обекту масив при помощи reduce и удаляем id
+// console.log(students.reduce((obj, el) => {
+//     obj[el.id] = el
+//     delete obj[el.id].id
+//     return obj
+// }, {})) //схлопнуть масив в обьект
+
+// const studentsObj_2 = {
+//     "20": 1,
+//     "21": 3,
+//     "22": 1
+// }
+
+/////////////////////////приводим students к обекту масив при помощи reduce и ject.keys
+// const studentsObj_2 = {}
+// for (let i = 0; i < students.length; i++) {
+//     if (Object.keys(studentsObj_2).includes(students[i].age.toString())) {
+//         studentsObj_2[students[i].age] = studentsObj_2[students[i].age] + 1
+//     } else {
+//         studentsObj_2[students[i].age] = 1
+//     }
+// }
+
+//////////////////////////////////////////////приводим students к обекту масив при помощи reduce и Object.hasOwn
+// console.log(students.reduce((obj, el) => {
+//     if (Object.hasOwn(obj, el.age.toString())) {
+//         obj[el.age] += 1
+//     } else{
+//         obj[el.age] = 1
+//     }
+//     return obj
+// }, {}))
