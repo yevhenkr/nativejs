@@ -34,8 +34,8 @@ const tasks = {
     ]
 }
 
-console.log(tasks)
-console.log(todoLists)
+// console.log(tasks)
+// console.log(todoLists)
 
 const addTodo = (todoListTitle) => {
     const newTodoListId = "3"
@@ -47,17 +47,17 @@ const addTodo = (todoListTitle) => {
     const newTodoListState = [...todoLists, newTodoList]
     console.log(newTodoListState)
     const newTaskState = {...tasks, [newTodoListId]: []}
-    console.log(newTaskState)
+    // console.log(newTaskState)
 }
 
 addTodo("What to read")
 
 const removeTodoList = (newTodoListId) => {
     const newTodoListState = todoLists.filter(tl => tl.id !== todoLists)
-    console.log(newTodoListState)
+    // console.log(newTodoListState)
     const copyTasksState = {...tasks}
     delete copyTasksState[newTodoListId]
-    console.log(copyTasksState)
+    // console.log(copyTasksState)
 }
 removeTodoList("2")
 
@@ -99,7 +99,6 @@ const students = [
     },
 ];
 
-
 //------------------------------------------------------------------------
 //////Target
 // const studensObj = {
@@ -117,7 +116,7 @@ const students = [
 //     }
 // }
 
-////////////////////////////////1 приводим students к обекту масив при помощи for
+//1 приводим students к обекту масив при помощи for + удалени id
 // const studensObj = {}
 // for (let i = 0; i < students.length; i++) {
 //     studensObj[students[i].id] = students[i]
@@ -125,7 +124,7 @@ const students = [
 // }
 // console.log(studensObj)
 
-/////////////////////////////////////приводим students к обекту масив при помощи reduce и удаляем id
+//приводим students к обекту масив при помощи reduce и удаляем id
 // console.log(students.reduce((obj, el) => {
 //     obj[el.id] = el
 //     delete obj[el.id].id
@@ -138,7 +137,7 @@ const students = [
 //     "22": 1
 // }
 
-/////////////////////////приводим students к обекту масив при помощи reduce и ject.keys
+//приводим students к обекту в котором прописано сколько ках возрастов у студентов обьект при помощи for и Object.keys
 // const studentsObj_2 = {}
 // for (let i = 0; i < students.length; i++) {
 //     if (Object.keys(studentsObj_2).includes(students[i].age.toString())) {
@@ -148,7 +147,7 @@ const students = [
 //     }
 // }
 
-//////////////////////////////////////////////приводим students к обекту масив при помощи reduce и Object.hasOwn
+//приводим students к обекту в котором прописано сколько ках возрастов у студентов обьект при помощи reduce и Object.hasOwn
 // console.log(students.reduce((obj, el) => {
 //     if (Object.hasOwn(obj, el.age.toString())) {
 //         obj[el.age] += 1
@@ -157,3 +156,4 @@ const students = [
 //     }
 //     return obj
 // }, {}))
+//
