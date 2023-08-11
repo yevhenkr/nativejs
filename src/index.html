@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My App</title>
+    <!-- Подключите ваш JavaScript-файл со всеми функциями -->
+    <script src="path/to/your/javascript/file.js"></script>
+</head>
+<body>
+<div>
+    <h2>Задача 1: repeatString</h2>
+    <p>Результат: <span id="repeatResult"></span></p>
+    <button onclick="runRepeatString()">Выполнить</button>
+</div>
+
+<div>
+    <h2>Задача 2: checkStart</h2>
+    <p>Результат: <span id="checkStartResult"></span></p>
+    <button onclick="runCheckStart()">Выполнить</button>
+</div>
+
+<!-- Добавьте остальные задачи и элементы HTML по аналогии -->
+
+<script>
+    //1. Реализуйте функцию, которая принимает параметром подсторку, число повторов и разделитель, а возвращает сторку, состоящую из указанного количества повторов подстроки с использованием разделителя.
+
+    function repeatString(substring, count, separator) {
+        let result = ""
+        for (let i = 0; i < count; i++) {
+            result += substring + separator
+        }
+        return result;
+    }
+
+    // repeatString("yo", 3, " ") => "yo yo yo"
+    // repeatString("yo", 3, ",") => "yo,yo,yo"
+    // repeatString("yo", 3, ", ") => "yo, yo, yo"
+    // repeatString("yo", 0, ", ") => ""
+    // repeatString("yo", 1, ", ") => "yo"
+
+    console.log(repeatString("yo", 3, " "))
+    console.log(repeatString("yo", 3, ","))
+    console.log(repeatString("yo", 3, ", "))
+    console.log(repeatString("yo", 0, ", "))
+    console.log(repeatString("yo", 1, ", "))
+
+    //2. Реализуйте функцию, которая принимает параметром сторку и подстроку, а возвращает true, если строка начинается с указанной подстроки, в противном случае - false. Регистр не учитывается.
+    // checkStart("Incubator", "inc") => true
+    // checkStart("Incubator", "yo") => false
+    function checkStart(str, subStr) {
+        let tr = false
+        for (let i = 0; i < subStr.length; i++) {
+            if (str[i].toLowerCase() != subStr[i].toLowerCase()) {
+                return false;
+            }
+            return true;
+        }
+        return tr;
+    }
+
+    console.log(checkStart("incubator", "inc"))
+    console.log(checkStart("Incubator", "yo"))
+    //3. Реализуйте функцию, которая принимает параметром строку и число (количество символов), а возвращает строку из параметров, обрезанную до указанного количества символов и завершает её многоточием.
+    //truncateString("Всем студентам инкубатора желаю удачи!", 10) => "Всем студе..."
+    function truncateString(str, count) {
+        let chars = ""
+        for (let i = 0; i < count; i++) {
+            chars += str[i]
+        }
+        return chars += "...";
+    }
+
+    console.log(truncateString("Всем студентам инкубатора желаю удачи!", 10))
+    //4. Реализуйте функцию, которая принимает параметром сторку (предложение) и возвращает самое короткое слово в предложении, если в параметрах пустая строка или не строка, то возвращает null.
+    // getMinLengthWord("Всем студентам инкубатора желаю удачи.") => "Всем"
+    // getMinLengthWord("") => null
+    // getMinLengthWord(123) => null
+    // getMinLengthWord(true) => null
+    // getMinLengthWord(undefined) => null
+
+    function getMinLengthWord(sentence) {
+        if (sentence === undefined || sentence.length <= 1 || typeof sentence !== "string") {
+            return null
+        }
+        const words = sentence.split(/\s+/);
+        let minLengthWord = words[0];
+
+        words.forEach((word) => {
+            if (word.length < minLengthWord.length) {
+                minLengthWord = word;
+            }
+
+        });
+        return minLengthWord;
+    }
+
+    console.log(getMinLengthWord("Всем студентам инкубатора желаю удачи."))
+    console.log(getMinLengthWord(""))
+    console.log(getMinLengthWord(123))
+    console.log(getMinLengthWord(true))
+    console.log(getMinLengthWord(undefined))
+
+    //5. Реализуйте функцию, которая принимает параметром сторку (предложение) и возвращает то же предложение, где все слова написаны строчными, но начинаются с заглавных букв.
+    // setUpperCase("всем стУдентам инкуБатора Желаю удачИ") => "Всем Студентам Инкубатора Желаю Удачи!"
+    function setUpperCase(sentence) {
+        sentence.toLowerCase()
+        const words = sentence.split(" ");
+        const upperCaseWords = words.map((word) => {
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        });
+        const resultSentence = upperCaseWords.join(" ");
+        return resultSentence;
+    }
+
+    console.log(setUpperCase("всем стУдентам инкуБатора Желаю удачИ"))
+
+    // !!!!!!!!!!!!!!!!!!После решения 5 задач - поднимаем руку!!!!!!!!
+
+    //6. Реализуйте функцию, котрая принимает параметрами строку и подстроку. Если все
+    // символы подстроки содержаться в стороке - возвращает true, если нет -
+    // возвращает false. Проверка проводится без учёта регистра и без учёта
+    // повторяющихся символов.
+    // * с учётом повторяющихся символов в подстроке
+
+
+    function ToLowerCaseString(str) {
+        transformedString = ""
+        for (let i = 0; i < str.length; i++) {
+            transformedString += str[i].toLowerCase();
+        }
+        return transformedString
+    }
+
+    function isIncludes(st, subStr) {
+        let arrStrChar = st.toLowerCase().split('')
+        const arrSubstrChar = subStr.toLowerCase().split('')
+
+        return arrSubstrChar.every((char) => {
+            let inde = arrStrChar.indexOf(char);
+            (inde === -1) ? false : true
+        })
+    }
+
+    function isIncludes2(str, subStr) {
+        const strToArr = str.split('')
+        const subStrToArr = subStr.split('')
+        return subStrToArr.every((char) => strToArr.includes(char))
+    }
+
+    console.log("6. Реализуйте функцию, котрая принимает параметрами строку и подстроку")
+    console.log(isIncludes("Incubator", "inb"))
+    console.log(isIncludes("Incubator", "inbba"))
+    // console.log(isIncludes("Incubator", "Incubatorrr"))
+    // isIncludes("Incubator", "Cut") => true
+    // isIncludes("Incubator", "table") => false
+    // isIncludes("Incubator", "inbbba") => true //*false
+    // isIncludes("Incubator", "inba") => true  //*true
+    // isIncludes("Incubator", "Incubatorrr")=> true //*false
+</script>
+</body>
+</html>
