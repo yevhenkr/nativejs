@@ -1,4 +1,5 @@
-import {ChangeEvent} from 'react';
+import React, {ChangeEvent} from 'react';
+import {Lesson_8} from '../lesson_8';
 
 export const User = () => {
     const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -9,5 +10,6 @@ export const User = () => {
         <input onChange={onChangeInput}/>
         <button>delete</button>
         <button>save</button>
+        <Lesson_8/>
     </div>
 }
