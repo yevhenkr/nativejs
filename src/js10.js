@@ -45,6 +45,24 @@
 //   }
 // });
 
+Promise.reject("reject1")
+    .catch((t) => t + "catch1")
+    .catch((t) => t + "catch2")
+    .then((t) => t + "then1")
+    .finally((t) => t + "finally")
+    .then((t) => console.log(t));
+
+// ---------------------------------------------------------
+const test = async () => {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts/1")
+    return response
+}
+test()
+    .then(res => console.log(res))
+    .catch((t) => t + "catch1")
+    .catch(t => console.log(t, "fffff"))
+// ---------------------------------------------------------
+
 // fetch("https://libruary.com/authors")
 //   .then((data) => {
 //     return fetch("https://libruary.com/authors/23")
@@ -62,20 +80,20 @@
 //     console.log(err)
 //   })
 
-// const fs = require('fs')
-
-// const file = {
-//   getFile() {
-//     return new Promise((res, rej) => {
-//       fs.readFile("./index.js", (err, data) => {
-//         if (err) {
-//           rej(err)
-//         } else {
-//           res(data)
-//       })
-//     })
-//   }
-// }
+const fs = require('fs')
+const file = {
+  getFile() {
+    return new Promise((res, rej) => {
+      fs.readFile("./index.js", (err, data) => {
+        if (err) {
+          rej(err)
+        } else {
+            res(data)
+        }
+      })
+    })
+  }
+}
 
 // const server = {
 //   getData() {
@@ -127,10 +145,3 @@
 // promise.finally(() => {
 //   console.log("finally");
 // })
-
-Promise.reject("reject1")
-  .catch((t) => t + "catch1")
-  .catch((t) => t + "catch2")
-  .then((t) => t + "then1")
-  .finally((t) => t + "finally")
-  .then((t) => console.log(t));
