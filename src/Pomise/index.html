@@ -1,0 +1,158 @@
+<html>
+<meta charset="UTF-8">
+<script src="axios.js"></script>
+<script src="api.js"></script>
+<script type="module">
+    // import { myPromise } from './promis.js';
+    // myPromise.then((rand) => {
+    //     console.log("myPromise зарезолвился, и я узнал об этом:",rand);
+    // })
+    // myPromise.then((rand) => {
+    //     console.log("myPromise зарезолвился, и я узнал об этом:",rand);
+    // })
+
+
+    let doAfter = (mSec) => {
+        let myPromise = new Promise((resolve) => {
+            setTimeout(() => {
+                resolve()
+            }, mSec * 1000
+            )
+        });
+        return myPromise
+    }
+
+    // doAfter(5).then( () => console.log('я сработал через 5 секунд') );
+    // doAfter(3).then( () => console.log('а я сработал через 3 секунд') );
+    // doAfter(10).then( () => console.log('я сработал через 10 секунд') );
+
+    // let promise3 = doAfter(3);
+    // promise3.then( () => console.log('я сработал через 3 секунд') );
+    // promise3.then( () => console.log('и я тоже следом сработал через 3 секунд') );
+    // promise3.then( () => console.log('и я') );
+
+    // setTimeout(()=>{
+    //     promise3.then( console.log("my propmis и я узнал об єтом"))
+    // },5000)
+
+    // let pr1 = doAfter(3);
+    // let pr2 = pr1.then( () => console.log('Мой промис зарезолвился') );
+    // let something = pr2.then( () => console.log('Мой промис зарезолвился следом за pr1'))
+    // console.log("Тут Propmis ?",something)
+
+    //о что мы написали в примере выше, обычно пишут так
+    // doAfter(3)
+    //     .then(() => console.log('Мой промис зарезолвился'))
+    //     .then(() => console.log('Мой промис зарезолвился следом'))
+
+    //Зарефакторим, вынеся коллбэки в переменные:
+    // let callback1 = () => console.log('Мой промис зарезолвился');
+    // let callback2 = () => console.log('Мой промис тоже зарезолвился следом');
+    //
+    // let pr1 = doAfter(3);
+    // let pr2 = pr1.then(callback1);
+    // pr2.then(callback2);
+
+    // 13) Напишите код так, чтобы первый колбэк что-то вернул, и тогда pr2 зарезолвится этим и callback2 получит это что-то! Напишите сами!
+    // let pr1 = doAfter(3);
+    // let pr2 = pr1.then(() => {
+    //     console.log('Мой промис зарезолвился');
+    //     return "it-kamasutra.com";
+    // });
+    // pr2.then((name)=> {
+    //     console.log(name)
+    // });
+
+    // 15
+    // let pr = new Promise((resolve) => {
+    //     let data = {
+    //         cities: [{title: "Minsk"}, {title: "Kiev"}],
+    //         website: "it-kamasutra.com"
+    //     };
+    //     resolve(data);
+    // });
+    //
+    // pr.then(data => {
+    //     console.log(data);
+    //     return data.website
+    // })
+    //     .then(website => {
+    //         console.log(website);
+    //     })
+
+    //16
+    // api.sendStudentsCountToItKamasutra(20)
+    //     .then(res => {
+    //         console.log(res);
+    //     });
+
+
+    //17 Мы можем получить обещание, которое выполнится, когда все под обещания будут выполнены
+    // let pr1 = doAfter(4); // один промис
+    // let pr2 = doAfter(7); // второй промис
+    //
+    // pr1.then( () => console.log("pr1 resolved") ); // индивидуально подписываемся на каждый
+    // pr2.then( () => console.log("pr2 resolved") );
+    //
+    // let aggregatedPromise = Promise.all([pr1, pr2]); // получаем общий промис
+    //
+    // aggregatedPromise.then( () => console.log("pr1 and pr2 resolved")); // сработает наш подписчик ТОЛЬКО когда все промисы, переданные в массиве в all будут resolved
+
+
+    // 18) А теперь по аналогии с doAfter создайте функцию (копипастом)
+    // getRandomAfter, которая будет рандомно выдавать какое-то число через заданное кол-во секунд
+    // let getRandomAfter = (mSec) => {
+    //     let myPromise = new Promise((resolve) => {
+    //         setTimeout(() => {
+    //             resolve(Math.random())
+    //         }, mSec * 1000
+    //         )
+    //     });
+    //     return myPromise
+    // }
+    //
+    // let promises = [getRandomAfter(1), getRandomAfter(2), getRandomAfter(3)];
+    // let commonPromise = Promise.all(promises);
+    // commonPromise.then( () => {
+    //     // как вывести здесь все 3 числа?? гуглим Promise.all
+    //     promises[0].then(k => console.log(k)),promises[1].then(k => console.log(k)),promises[2].then(k => console.log(k))
+    // } );
+
+
+    //Нужно в камасутру отправить суммарное кол-во вакансий значение, которое получится в ответах от компании microsoft и google
+    function PromisVersionGetVacancies() {
+        let msVacancies;
+        api.getVacanciesCountFromMicrosoft()
+            .then(msCount => {
+                msVacancies = msCount
+                return api.getVacanciesCountFromGoogle()
+            })
+            .then(gCount => {
+                return api.sendStudentsCountToItKamasutra(msVacancies + gCount)
+            })
+            .then(data => {
+                console.log("all vacancies", data)
+            })
+    }
+
+    async function AsincAwaitVersionGetVacancies() {
+        let msCount = await api.getVacanciesCountFromMicrosoft()
+        let gCount = await api.getVacanciesCountFromGoogle()
+        let vacancies = await api.sendStudentsCountToItKamasutra(msCount + gCount)
+        console.log("vacancies", vacancies)
+    }
+
+    async function AsincAwaitParalelVersionGetVacancies() {
+        let msResult = await Promise.all(
+            [api.getVacanciesCountFromMicrosoft(),
+                api.getVacanciesCountFromGoogle()]
+        )
+        let vacancies = await api.sendStudentsCountToItKamasutra(msResult[0] + msResult[1])
+        console.log("vacancies", vacancies)
+    }
+
+    // PromisVersionGetVacancies()
+    AsincAwaitVersionGetVacancies()
+    // AsincAwaitParalelVersionGetVacancies()
+</script>
+</html>
